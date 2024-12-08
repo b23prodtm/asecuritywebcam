@@ -50,7 +50,7 @@ workflows:
     jobs:
     - shellcheck/check:
         ignore: 'SC1091,SC2034,SC2096,SC2038'
-  build-and-compose:
+  docker-compose:
     jobs:
     - compose:
         context: Info-b23prodtm
