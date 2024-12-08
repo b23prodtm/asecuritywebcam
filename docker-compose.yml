@@ -8,10 +8,10 @@ services:
     labels:
       io.balena.features.kernel-modules: '1'
   webcam:
-    image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
+    image: betothreeprod/webcam-stream:latest-ffmpeg
     build:
       context: .
-      dockerfile: Dockerfile.armhf
+      dockerfile: Dockerfile.x86_64
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"

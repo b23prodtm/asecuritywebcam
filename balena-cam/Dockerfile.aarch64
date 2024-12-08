@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-debian:stretch-20190612
+FROM balenalib/raspberrypi3-64-debian:stretch-20190612
 
 # Install dependencies
 RUN apt-get update && \
