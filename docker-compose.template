@@ -1,7 +1,9 @@
 version: '2.1'
 services:  
   balena-cam:
-    build: ./balena-cam
+    build:
+      context:  ./balena-cam
+      dockerfile: Dockerfile.template
     privileged: true
     restart: always
     network_mode: "host"
