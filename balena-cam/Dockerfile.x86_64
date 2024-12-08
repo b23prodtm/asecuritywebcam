@@ -1,4 +1,4 @@
-FROM balenalib/intel-nuc-debian:stretch-20190612
+FROM balenalib/intel-nuc-debian:latest-bullseye
 
 # Install dependencies
 RUN apt-get update && \
