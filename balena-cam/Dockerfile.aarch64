@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-64-debian:latest-bullseye
+FROM balenalib/raspberrypi3-64-debian-node:latest-bullseye
 
 # Install dependencies
 RUN apt-get update && \
