@@ -1,4 +1,4 @@
-FROM balenalib/intel-nuc-debian-node:latest-bullseye
+FROM balenalib/intel-nuc-debian-node:latest-buster
 
 # Install dependencies
 RUN apt-get update && \
