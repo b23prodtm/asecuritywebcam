@@ -11,7 +11,7 @@ services:
     image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
