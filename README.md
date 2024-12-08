@@ -1,6 +1,6 @@
-![](https://github.com/balena-labs-projects/balena-cam/blob/master/balena-cam/app/client/balena-cam-readme.png?raw=true)
+![](https://github.com/b23protm/asecuritywebcam/blob/master/balena-cam/app/client/balena-cam-readme.png?raw=true)[![CircleCI](https://dl.circleci.com/status-badge/img/gh/b23prodtm/asecuritywebcam/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/b23prodtm/asecuritywebcam/tree/master)
 
-Live stream your balena device's camera feed.
+Live stream your balena device's camera feed, featuring an [RTSP proxy](https://github.com/kerberos-io/camera-to-rtsp).
 
 ## Getting started
 
@@ -8,7 +8,7 @@ Running this project is as simple as deploying it to a fleet.
 
 One-click deploy to balenaCloud:
 
-[![](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy)
+[![deploy with balena](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/b23prodtm/asecuritywebcam)
 
 **or**
 
@@ -25,6 +25,9 @@ One-click deploy to balenaCloud:
     | **`BALENA_HOST_CONFIG_gpu_mem_256`**  | **`192`** |
     | **`BALENA_HOST_CONFIG_gpu_mem_512`**  | **`256`** |
     | **`BALENA_HOST_CONFIG_gpu_mem_1024`** | **`448`** |
+    | `MTX_WEBRTCADDITIONALHOSTS` | Specify the hostname network IP address to publish the stream to |
+    | `MTX_PATH` | cam or webcam as defined in YAML RTSP-configuration | 
+    | `SHM_SIZE`| 10G (=10 Gigabytes) Specify Shared Memory Usage |
 
 - Using [Balena CLI](https://www.balena.io/docs/reference/cli/), push the code with `balena push <fleet-name>`.
 - See the magic happening, your device is getting updated 🌟Over-The-Air🌟!
@@ -80,8 +83,53 @@ If you have access to a TURN server and you want your balenaCam devices to use i
 - **Safari**
 - **Edge** (only mjpeg stream)
 
-## Become a balena poweruser
+### RSTP server
 
-Want to learn more about what makes balena work? Try one of our [masterclasses](https://www.balena.io/docs/learn/more/masterclasses/overview/). Each lesson is a self-contained, deeply detailed walkthrough on core skills to be successful with your next edge project.
+Currently only H264 RTSP streams are supported from mediamtx sidecar container
 
-Check them out at our [docs](https://www.balena.io/docs/learn/more/masterclasses/overview/). Also, reach out to us on the [Forums](https://forums.balena.io/) if you need help.
+## Usage
+
+Set MTX_PATH environment default value in common.env :
+  - "cam": binary server will use configuration file for RPI Camera (it must be connected to the Raspberry Pi camera socket
+  - "webcam": environment to set the source as the USB WebCam (/dev/video0)
+Force switch to any MTX_PATH source:
+`./config_mtx.sh [cam|webcam]`
+
+## Node Package Manager
+
+  This project depends on npmjs [balena-cloud-apps](https://www.npmjs.com/package/balena-cloud-apps). Please call
+  `npm install balena-cloud-apps && npm update`
+  whenever the system complains about `balena_deploy` not found.
+After npm install succeeded, HuewizPi can be dbuilt and optionally deployed to the device
+
+### Updating Balena templates
+
+When you make changes to `docker*.template` files and environment `*.env` files, you can apply changes that the CPU architecture depends on. To do so, run
+deployment scripts `update-templates.sh`
+
+A new service image can be build
+- Check values in `${BALENA_ARCH}.env`
+  
+| Node Machine   | `BALENA_MACHINE_NAME` | `BALENA_ARCH` |
+| ------------ | -------------------- | ------------- |
+| Raspberry Pi 3 | raspberrypi3           | armhf |
+| Raspberry Pi 4 | raspberrypi3-64       | aarch64 |
+| Mini PC        | intel-nuc             | x86_64 |
+
+### Making changes
+Open a new fixture branch:
+`./git-fix-issue.sh <issue #>`
+After switched to the new branch, edit and make changes you need, git add and commit them to the git tree.
+Close issue after a successful pull request:
+`./git-fix-issue-close.sh <issue #>`
+It will delete the fixture branch locally and checkout main/master branch
+
+### Deploy to Balena Cloud
+
+Update balena apps after committing changes `git commit -a && git push`
+  `. deploy.sh`
+- Select 1:armhf, 2:aarch64 or 3:x86_64 as the target machine CPU
+- You choose to build FROM a balenalib base image as set in Dockerfile.template, then type `0` or `CTRL-C` to exit the script
+- All template data filters copy to Dockerfile.aarch64, Dockerfile.armhf and Dockerfile.x86_64
+
+
