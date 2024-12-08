@@ -15,9 +15,12 @@ RUN apt-get update && \
     libopencv-dev \
     libatlas3-base \
     libatlas-base-dev \
-    libjasper-dev \
-    libilmbase12 \
-    libopenexr22 \
+#    libjasper-dev \
+    libequinox-jsp-jasper-java \
+#    libilmbase12 \
+    libilmbase23 \
+#    libopenexr22 \
+    libopenexr23 \
     libavformat-dev \
     libswscale-dev \
     libqtgui4 \
