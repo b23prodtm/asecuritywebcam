@@ -1,0 +1,36 @@
+version: '2.1'
+services:  
+  balena-cam:
+    build: ./balena-cam
+    privileged: true
+    restart: always
+    network_mode: "host"
+    labels:
+      io.balena.features.kernel-modules: '1'
+  webcam:
+    image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
+    build:
+      context: .
+      dockerfile: Dockerfile.aarch64
+#    sysctls:
+#      - fs.protected_regular=0
+    restart: "always"
+    devices:
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video0:/dev/video0 
+    environment:
+      LD_LIBRARY_PATH: /opt/vc/lib
+      MTX_PATHS_CAM_SOURCE: rpiCamera
+    network_mode: host
+    ports:
+      - "8554:8554"
+      - "1935:1935"
+      - "8888:8888"
+      - "8889:8889"
+      - "8890:8890/udp"
+      - "8189:8189/udp"
+    privileged: true
+    volumes:
+      - "openvc:/opt/vc"
+volumes:
+  openvc:

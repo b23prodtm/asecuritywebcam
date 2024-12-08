@@ -1,0 +1,32 @@
+FROM bluenviron/mediamtx:latest-ffmpeg as MTX_BASE
+FROM balenalib/intel-nuc-debian-node:latest-bullseye
+#FROM balenalib/intel-nuc-alpine-node:latest-edge
+# App settings
+ENV TARGETPLATFORM ${TARGETPLATFORM:-linux/amd64}
+ENV MTX_WEBRTCADDITIONALHOSTS ${MTX_WEBRTCADDITIONALHOSTS:-'videosurveillance.local'}
+ENV MEDIAMTX_FILE ${MEDIAMTX_FILE:-'rtsp-simple-server.yml'}
+ENV RTSP_PORT ${RTSP_PORT:-'8554'}
+ENV MTX_PATH ${MTX_PATH:-cam}
+# App build parameters
+ENV MTX_PROTOCOLS 'tcp'
+ENV UDEV 1
+# RUN [ "cross-build-start" ]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg
+
+WORKDIR /
+# We used to build our own binaries (bluenviron/mediamtx) but we can't pull source code on demand yet !
+# TODO: the deploy-to-fleet function should allow submodule checkout
+#COPY $TARGETPLATFORM/. /
+COPY --from=MTX_BASE /mediamtx /
+COPY rtsp-simple-server-cam.template /
+COPY rtsp-simple-server-webcam.template /
+COPY config_mtx.sh /
+COPY etc/udev/rules.d/. /etc/udev/rules.d/
+RUN chmod +x /config_mtx.sh && /config_mtx.sh "$MTX_PATH"
+RUN chmod a+x /mediamtx
+COPY entrypoint.sh /
+RUN chmod a+x entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+# RUN [ "cross-build-end" ]
