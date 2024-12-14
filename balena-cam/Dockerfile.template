@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node:latest-buster
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node:latest-buster-build
 
 # Install dependencies
 RUN apt-get update && \

@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-debian-node:latest-buster
+FROM balenalib/raspberrypi3-debian-node:latest-buster-build
 
 # Install dependencies
 RUN apt-get update && \
