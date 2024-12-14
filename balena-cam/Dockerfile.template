@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-20190612
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node:latest-buster-build
 
 # Install dependencies
 RUN apt-get update && \
@@ -15,9 +15,12 @@ RUN apt-get update && \
     libopencv-dev \
     libatlas3-base \
     libatlas-base-dev \
-    libjasper-dev \
-    libilmbase12 \
-    libopenexr22 \
+#    libjasper-dev \
+    libequinox-jsp-jasper-java \
+#    libilmbase12 \
+    libilmbase23 \
+#    libopenexr22 \
+    libopenexr23 \
     libavformat-dev \
     libswscale-dev \
     libqtgui4 \
@@ -30,8 +33,10 @@ RUN apt-get update && \
 # Enable the v4l2 driver for the Raspberry Pi camera
 #RUN printf "bcm2835-v4l2\n" >> /etc/modules
 RUN pip3 install --upgrade pip 
-RUN pip3 install async-timeout av==6.1.0
-RUN pip3 install pyee==8.2.2 aiohttp aiohttp_basicauth==0.1.3 aioice==0.6.10 aiortc==0.9.11 numpy==1.15.4 opencv-python==3.4.4.19 --index-url https://www.piwheels.org/simple
+#RUN pip3 install async-timeout av==6.1.0
+#RUN pip3 install pyee==8.2.2 aiohttp aiohttp_basicauth==0.1.3 aioice==0.6.10 aiortc==0.9.11 numpy==1.15.4 opencv-python==3.4.4.19 --index-url https://www.piwheels.org/simple
+RUN pip3 install async-timeout
+RUN pip3 install pyee aiohttp aiohttp_basicauth aioice aiortc numpy opencv-python
 
 WORKDIR /usr/src/app
 

@@ -3,17 +3,17 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.x86_64
     privileged: true
     restart: always
     network_mode: "host"
     labels:
       io.balena.features.kernel-modules: '1'
   webcam:
-    image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
+    image: betothreeprod/webcam-stream:latest-ffmpeg
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.x86_64
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
