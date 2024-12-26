@@ -23,6 +23,9 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATHS_CAM_SOURCE: rpiCamera
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+    labels:
+      io.balena.features.dbus: "1"
     network_mode: host
     ports:
       - "8554:8554"
