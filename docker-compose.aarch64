@@ -7,6 +7,9 @@ services:
     privileged: true
     restart: always
     network_mode: "host"
+    devices:
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
   webcam:
@@ -22,7 +25,7 @@ services:
       - /dev/video0:/dev/video0 
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
-      MTX_PATHS_CAM_SOURCE: rpiCamera
+      MTX_PATH: cam
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
