@@ -6,4 +6,5 @@ fi
 printf "Remounting shm with size %s ..." "${SHM_SIZE}"
 mount -o remount,rw,exec,size="${SHM_SIZE}" /dev/shm
 printf "Remounting shm with size %s ...DONE" "${SHM_SIZE}"
-./mediamtx
+/config_mtx.sh "$MTX_PATH"
+/mediamtx
