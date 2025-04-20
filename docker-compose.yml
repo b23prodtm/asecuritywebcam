@@ -4,7 +4,7 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
     privileged: true
     restart: always
     network_mode: "host"
@@ -17,7 +17,10 @@ services:
   rpicam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
+      environment:
+        MTX_PATH: cam
+        RTSP_PORT: 8555
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -27,8 +30,6 @@ services:
     privileged: true
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
-      MTX_PATH: cam
-      RTSP_PORT: 8555
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
@@ -40,7 +41,10 @@ services:
   webcam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
+      environment:
+        MTX_PATH: webcam
+        RTSP_PORT: 8554
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -50,8 +54,6 @@ services:
     privileged: true
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
-      MTX_PATH: webcam
-      RTSP_PORT: 8554
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
