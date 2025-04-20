@@ -5,7 +5,9 @@ FROM balenalib/intel-nuc-debian-node:latest-bullseye
 ENV TARGETPLATFORM ${TARGETPLATFORM:-linux/amd64}
 ENV MTX_WEBRTCADDITIONALHOSTS ${MTX_WEBRTCADDITIONALHOSTS:-'videosurveillance.local'}
 ENV MEDIAMTX_FILE ${MEDIAMTX_FILE:-'rtsp-simple-server.yml'}
+ARG RTSP_PORT
 ENV RTSP_PORT ${RTSP_PORT:-%%RTSP_PORT%%}
+ARG MTX_PATH
 ENV MTX_PATH ${MTX_PATH:-webcam}
 # App build parameters
 ENV MTX_PROTOCOLS 'tcp'
