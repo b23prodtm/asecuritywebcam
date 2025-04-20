@@ -4,7 +4,7 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
     privileged: true
     restart: always
     network_mode: "host"
@@ -17,7 +17,7 @@ services:
   rpicam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
       args:
         MTX_PATH: cam
         RTSP_PORT: 8555
@@ -41,7 +41,7 @@ services:
   webcam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
       args:
         MTX_PATH: webcam
         RTSP_PORT: 8554
