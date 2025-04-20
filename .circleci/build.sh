@@ -4,7 +4,7 @@ usage=("" \
 "Usage: $0" \
 "    CircleCI needs a primary image with docker-in-docker backend." \
 "    To build it use deployment/build.sh script to push to image registry and tag it:" \
-"        deployment/images/build.sh secondary betothreeprod/mysqldb raspberrypi3-64-latest" \
+"        deployment/images/build.sh secondary betothreeprod/cci-mariadb arm64v8-latest" \
 "Then you can run composition process: sudo docker-compose up --build" \
 "")
 [ ! "$(command -v circleci)" ] && curl -fLSs https://circle.ci/cli | bash
