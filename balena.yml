@@ -19,10 +19,12 @@ data:
   applicationEnvironmentVariables:
     - MTX_WEBRTCADDITIONALHOSTS: "127.0.0.1"
     - MTX_PORT: "8554"
-    - MTX_PATH: "cam"
-  defaultDeviceType: raspberrypi3
+    - MTX_PATH: "webcam"
+  defaultDeviceType: raspberrypi3-64
   supportedDeviceTypes:
+    - raspberrypi2
     - raspberrypi3
+    - raspberrypi3-64
     - raspberrypi4-64
 version: 1.0.0
 #balena-cam based release tag:

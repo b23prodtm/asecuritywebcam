@@ -1,6 +1,6 @@
 version: '2.1'
 services:  
-#raspberry pi camera (webpage)
+#camera webpage
   balena-cam:
     build:
       context:  ./balena-cam
@@ -13,7 +13,7 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
-#USB video webcam's URL rtsp://<ip-address>:8554/webcam
+#RTSP stream URL rtsp://<ip-address>:8554/webcam
   webcam:
     build:
       context: .

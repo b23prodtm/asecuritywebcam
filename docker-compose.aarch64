@@ -1,6 +1,6 @@
 version: '2.1'
 services:  
-#raspberry pi camera (webpage)
+#camera webpage
   balena-cam:
     build:
       context:  ./balena-cam
@@ -13,9 +13,8 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
-#USB video webcam's URL rtsp://<ip-address>:8554/webcam
+#RTSP stream URL rtsp://<ip-address>:8554/webcam
   webcam:
-    image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
     build:
       context: .
       dockerfile: Dockerfile.aarch64
@@ -32,7 +31,6 @@ services:
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
-    network_mode: host
     ports:
       - "8554:8554"
       - "1935:1935"
@@ -40,7 +38,6 @@ services:
       - "8889:8889"
       - "8890:8890/udp"
       - "8189:8189/udp"
-    privileged: true
     volumes:
       - "openvc:/opt/vc"
 volumes:
