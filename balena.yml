@@ -18,8 +18,7 @@ data:
     - BALENA_HOST_CONFIG_gpu_mem_1024: 448
   applicationEnvironmentVariables:
     - MTX_WEBRTCADDITIONALHOSTS: "127.0.0.1"
-    - MTX_PORT: "8554"
-    - MTX_PATH: "cam"
+    - SHM_SIZE: "10G"
   defaultDeviceType: raspberrypi3-64
   supportedDeviceTypes:
     - raspberrypi2
