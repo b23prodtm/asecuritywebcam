@@ -1,10 +1,10 @@
 version: '2.1'
 services:  
-#camera webpage
+#camera webpage (raspberry pi webcam only)
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
     privileged: true
     restart: always
     network_mode: "host"
@@ -13,11 +13,35 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
-#RTSP stream URL rtsp://<ip-address>:8554/webcam
+#RTSP stream URL rtsp://<ip-address>:8554/cam
+  rpicam:
+    build:
+      context: .
+      dockerfile: Dockerfile.armhf
+#    sysctls:
+#      - fs.protected_regular=0
+    restart: "always"
+    devices:
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video0:/dev/video0 
+    privileged: true
+    environment:
+      LD_LIBRARY_PATH: /opt/vc/lib
+      MTX_PATH: cam
+      MTX_PORT: 8554
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+    labels:
+      io.balena.features.dbus: "1"
+    ports:
+      - "8554:8554"
+    volumes:
+      - "openvc:/opt/vc"
+#RTSP stream URL rtsp://<ip-address>:8555/webcam
+# USB video webcam support
   webcam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -28,16 +52,12 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATH: webcam
+      MTX_PORT: 8555
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
     ports:
-      - "8554:8554"
-      - "1935:1935"
-      - "8888:8888"
-      - "8889:8889"
-      - "8890:8890/udp"
-      - "8189:8189/udp"
+      - "8555:8555"
     volumes:
       - "openvc:/opt/vc"
 volumes:
