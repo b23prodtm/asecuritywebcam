@@ -4,7 +4,7 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.x86_64
+      dockerfile: Dockerfile.aarch64
     privileged: true
     restart: always
     network_mode: "host"
@@ -17,7 +17,7 @@ services:
   rpicam:
     build:
       context: .
-      dockerfile: Dockerfile.x86_64
+      dockerfile: Dockerfile.aarch64
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -41,7 +41,7 @@ services:
   webcam:
     build:
       context: .
-      dockerfile: Dockerfile.x86_64
+      dockerfile: Dockerfile.aarch64
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
