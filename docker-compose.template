@@ -1,5 +1,6 @@
 version: '2.1'
 services:  
+#raspberry pi camera (webpage)
   balena-cam:
     build:
       context:  ./balena-cam
@@ -12,6 +13,7 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
+#USB video webcam's URL rtsp://<ip-address>:8554/webcam
   webcam:
     image: betothreeprod/webcam-stream:%%IMG_TAG%%
     build:
@@ -26,7 +28,7 @@ services:
     privileged: true
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
-      MTX_PATH: cam
+      MTX_PATH: webcam
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
