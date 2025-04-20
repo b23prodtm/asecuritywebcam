@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.armhf
-      environment:
+      args:
         MTX_PATH: cam
         RTSP_PORT: 8555
 #    sysctls:
@@ -42,7 +42,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.armhf
-      environment:
+      args:
         MTX_PATH: webcam
         RTSP_PORT: 8554
 #    sysctls:
