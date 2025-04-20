@@ -13,7 +13,7 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
-#RTSP stream URL rtsp://<ip-address>:$RTSP_PORT/cam
+#RTSP stream URL rtsp://<ip-address>:$RTSP_PORT/$MTX_PATH
   rpicam:
     build:
       context: .
@@ -28,15 +28,14 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATH: cam
-      RTSP_PORT: 8554
+      RTSP_PORT: 8555
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
     ports:
-      - "8554:8554"
+      - "8555:8555"
     volumes:
       - "openvc:/opt/vc"
-#RTSP stream URL rtsp://<ip-address>:$RTSP_PORT/webcam
 # USB video webcam support
   webcam:
     build:
@@ -52,12 +51,12 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATH: webcam
-      RTSP_PORT: 8555
+      RTSP_PORT: 8554
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
     ports:
-      - "8555:8555"
+      - "8554:8554"
     volumes:
       - "openvc:/opt/vc"
 volumes:
