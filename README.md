@@ -26,7 +26,6 @@ One-click deploy to balenaCloud:
     | **`BALENA_HOST_CONFIG_gpu_mem_512`**  | **`256`** |
     | **`BALENA_HOST_CONFIG_gpu_mem_1024`** | **`448`** |
     | `MTX_WEBRTCADDITIONALHOSTS` | Specify the hostname network IP address to publish the stream to |
-    | `MTX_PATH` | cam or webcam as defined in YAML RTSP-configuration | 
     | `SHM_SIZE`| 10G (=10 Gigabytes) Specify Shared Memory Usage |
 
 - Using [Balena CLI](https://www.balena.io/docs/reference/cli/), push the code with `balena push <fleet-name>`.
@@ -89,18 +88,35 @@ Currently only H264 RTSP streams are supported from mediamtx sidecar container
 
 ## Usage
 
-Set MTX_PATH environment default value in common.env :
-  - "cam": binary server will use configuration file for RPI Camera (it must be connected to the Raspberry Pi camera socket
-  - "webcam": environment to set the source as the USB WebCam (/dev/video0)
-Force switch to any MTX_PATH source:
-`./config_mtx.sh [cam|webcam]`
+Open the web browser to find the balena-cam page:
+
+    http://<device-ip-adress>
+
+Video stream URL:
+
+    rtsp://<ip-address>:$RTSP_PORT/$MTX_PATH
+    rtsp://<ip-address>:8555/cam
+    rtsp://<ip-address>:8554/webcam
+
+
+Edit MediaMTX configuration files:
+
+    `./rtsp-simple-server-[cam|webcam].template`
+
+Change the default RTSP_PORT:MTX_PATH docker variables in `docker-compose.template` :
+
+  - "8555:cam": original RPI Camera connected to the Raspberry Pi
+  - "8554:webcam": USB WebCam (/dev/video0)
+
+    update_templates
+    balena_deploy
+
+See more about deployment options in `./deploy.sh` script.
 
 ## Node Package Manager
 
-  This project depends on npmjs [balena-cloud-apps](https://www.npmjs.com/package/balena-cloud-apps). Please call
-  `npm install balena-cloud-apps && npm update`
+  This project depends on npmjs [balena-cloud-apps](https://www.npmjs.com/package/balena-cloud-apps). Please use `yarn` NPM.
   whenever the system complains about `balena_deploy` not found.
-After npm install succeeded, HuewizPi can be dbuilt and optionally deployed to the device
 
 ### Updating Balena templates
 
