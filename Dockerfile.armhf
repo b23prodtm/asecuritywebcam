@@ -6,13 +6,13 @@ ENV TARGETPLATFORM ${TARGETPLATFORM:-linux/arm}
 ENV MTX_WEBRTCADDITIONALHOSTS ${MTX_WEBRTCADDITIONALHOSTS:-'videosurveillance.local'}
 ENV MEDIAMTX_FILE ${MEDIAMTX_FILE:-'rtsp-simple-server.yml'}
 ARG RTSP_PORT
-ENV RTSP_PORT ${RTSP_PORT:-%%RTSP_PORT%%}
+ENV RTSP_PORT ${RTSP_PORT:-'%%RTSP_PORT%%'}
 ARG MTX_PATH
 ENV MTX_PATH ${MTX_PATH:-webcam}
 # App build parameters
 ENV MTX_PROTOCOLS 'tcp'
 ENV UDEV 1
-# RUN [ "cross-build-start" ]
+#RUN [ "cross-build-start" ]
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg
@@ -31,4 +31,4 @@ RUN chmod a+x /mediamtx
 COPY entrypoint.sh /
 RUN chmod a+x entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
-# RUN [ "cross-build-end" ]
+#RUN [ "cross-build-end" ]
