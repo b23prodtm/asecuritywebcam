@@ -1,4 +1,4 @@
-![](https://github.com/b23protm/asecuritywebcam/blob/master/balena-cam/app/client/balena-cam-readme.png?raw=true)[![CircleCI](https://dl.circleci.com/status-badge/img/gh/b23prodtm/asecuritywebcam/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/b23prodtm/asecuritywebcam/tree/master)
+![](https://github.com/b23protm/asecuritywebcam/blob/master/balena-cam/app/client/balena-cam-readme.png?raw=true)[![CircleCI](https://dl.circleci.com/status-badge/img/gh/b23prodtm/asecuritywebcam/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/b23prodtm/asecuritywebcam/tree/development)
 
 Live stream your balena device's camera feed, featuring an [RTSP proxy](https://github.com/kerberos-io/camera-to-rtsp).
 
