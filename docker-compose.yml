@@ -4,7 +4,7 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
     privileged: true
     restart: always
     network_mode: "host"
@@ -13,11 +13,11 @@ services:
       - /dev/video0:/dev/video0 
     labels:
       io.balena.features.kernel-modules: '1'
-#RTSP stream URL rtsp://<ip-address>:8554/cam
+#RTSP stream URL rtsp://<ip-address>:$RTSP_PORT/cam
   rpicam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -28,7 +28,7 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATH: cam
-      MTX_PORT: 8554
+      RTSP_PORT: 8554
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
@@ -36,12 +36,12 @@ services:
       - "8554:8554"
     volumes:
       - "openvc:/opt/vc"
-#RTSP stream URL rtsp://<ip-address>:8555/webcam
+#RTSP stream URL rtsp://<ip-address>:$RTSP_PORT/webcam
 # USB video webcam support
   webcam:
     build:
       context: .
-      dockerfile: Dockerfile.aarch64
+      dockerfile: Dockerfile.armhf
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
@@ -52,7 +52,7 @@ services:
     environment:
       LD_LIBRARY_PATH: /opt/vc/lib
       MTX_PATH: webcam
-      MTX_PORT: 8555
+      RTSP_PORT: 8555
       DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
     labels:
       io.balena.features.dbus: "1"
