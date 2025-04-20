@@ -4,7 +4,7 @@ services:
   balena-cam:
     build:
       context:  ./balena-cam
-      dockerfile: Dockerfile.armhf
+      dockerfile: Dockerfile.x86_64
     privileged: true
     restart: always
     network_mode: "host"
@@ -15,10 +15,10 @@ services:
       io.balena.features.kernel-modules: '1'
 #USB video webcam's URL rtsp://<ip-address>:8554/webcam
   webcam:
-    image: betothreeprod/webcam-stream:latest-ffmpeg-rpi
+    image: betothreeprod/webcam-stream:latest-ffmpeg
     build:
       context: .
-      dockerfile: Dockerfile.armhf
+      dockerfile: Dockerfile.x86_64
 #    sysctls:
 #      - fs.protected_regular=0
     restart: "always"
